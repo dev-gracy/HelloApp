@@ -18,6 +18,3 @@ doc/
 out/
 build/
 dist/
-
-# Runtime persistence output
-data/
