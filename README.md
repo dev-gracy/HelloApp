@@ -4,7 +4,7 @@ HelloApp starts with a simple console greeting and is designed to evolve through
 
 ## Summary
 
-This project is a Maven-based Java console application. UC1 focuses on displaying "Hello World" in the console. Later use cases can extend it to accept user input, manage name lists, refactor logic into classes, and persist data.
+This project is a Maven-based Java console application. It begins with displaying "Hello World", then expands to user-name handling from command-line arguments and standard input, list management, refactoring, persistence, and banner-style output.
 
 ## Use Case Roadmap
 
@@ -25,5 +25,5 @@ This project is a Maven-based Java console application. UC1 focuses on displayin
 
 ```bash
 mvn clean install
-mvn exec:java -Dexec.mainClass="HelloApp"
+java -cp target/HelloApp-1.0.0-SNAPSHOT.jar HelloApp
 ```
