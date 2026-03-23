@@ -47,7 +47,7 @@ class HelloAppTest {
         Path storage = tempDir.resolve("names.txt");
         NameManager firstRun = new NameManager(storage);
 
-        HelloApp.execute(new String[]{"--add", "Ava", "Ben"}, new Scanner(""), firstRun);
+        HelloApp.execute(new String[]{"Ava", "Ben"}, new Scanner(""), firstRun);
         HelloApp.execute(new String[]{"--remove", "Ava"}, new Scanner(""), firstRun);
         firstRun.save();
 
@@ -67,7 +67,7 @@ class HelloAppTest {
     @Test
     void listCommandShowsStoredNames() {
         NameManager manager = new NameManager(tempDir.resolve("names.txt"));
-        HelloApp.execute(new String[]{"--add", "Ava", "Ben"}, new Scanner(""), manager);
+        HelloApp.execute(new String[]{"Ava", "Ben"}, new Scanner(""), manager);
 
         List<String> output = HelloApp.execute(new String[]{"--list"}, new Scanner(""), manager);
         assertEquals(1, output.size());

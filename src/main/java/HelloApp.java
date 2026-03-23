@@ -22,15 +22,13 @@ public class HelloApp {
 
     static List<String> execute(String[] args, Scanner scanner, NameManager manager) {
         CommandOptions options = CommandOptions.parse(args);
-        List<String> collectedNames = new ArrayList<>();
-        collectedNames.addAll(options.positionalNames);
+        List<String> sessionNames = new ArrayList<>(options.positionalNames);
 
         if (options.readFromStdin) {
-            collectedNames.addAll(readNamesFromStdin(scanner));
+            sessionNames.addAll(readNamesFromStdin(scanner));
         }
 
-        manager.addNames(options.explicitAdds);
-        manager.addNames(collectedNames);
+        manager.addNames(sessionNames);
 
         List<String> output = new ArrayList<>();
 
@@ -48,23 +46,18 @@ public class HelloApp {
             return output;
         }
 
-        if (collectedNames.isEmpty() && options.defaultGreeting) {
-            output.add("Hello World");
-        } else if (collectedNames.isEmpty() && !options.hasAction()) {
+        if (sessionNames.isEmpty()) {
             output.add("Hello World");
         } else {
-            for (String name : collectedNames) {
+            for (String name : sessionNames) {
                 output.add("Hello " + name);
             }
         }
 
         if (options.bannerMode) {
-            String bannerText;
-            if (collectedNames.isEmpty()) {
-                bannerText = "Hello World";
-            } else {
-                bannerText = "Hello " + String.join(", ", collectedNames);
-            }
+            String bannerText = sessionNames.isEmpty()
+                ? "Hello World"
+                : "Hello " + String.join(", ", sessionNames);
             output.add(manager.toBanner(bannerText));
         }
 
@@ -98,10 +91,8 @@ public class HelloApp {
 
     private static class CommandOptions {
         private final List<String> positionalNames = new ArrayList<>();
-        private final List<String> explicitAdds = new ArrayList<>();
         private final List<String> removals = new ArrayList<>();
         private boolean readFromStdin;
-        private boolean defaultGreeting;
         private boolean listStored;
         private boolean bannerMode;
 
@@ -114,9 +105,6 @@ public class HelloApp {
                     case "--stdin":
                         options.readFromStdin = true;
                         break;
-                    case "--default":
-                        options.defaultGreeting = true;
-                        break;
                     case "--list":
                         options.listStored = true;
                         break;
@@ -128,11 +116,6 @@ public class HelloApp {
                             options.removals.add(args[++i]);
                         }
                         break;
-                    case "--add":
-                        while (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-                            options.explicitAdds.add(args[++i]);
-                        }
-                        break;
                     default:
                         options.positionalNames.add(token);
                         break;
@@ -140,15 +123,6 @@ public class HelloApp {
             }
 
             return options;
-        }
-
-        boolean hasAction() {
-            return !positionalNames.isEmpty()
-                || !explicitAdds.isEmpty()
-                || !removals.isEmpty()
-                || readFromStdin
-                || listStored
-                || bannerMode;
         }
     }
 }

@@ -1,24 +1,31 @@
 # HelloApp
 
-HelloApp is a Maven-based Java console app that now implements UC1 through UC12.
+HelloApp is a small Java console project built with Maven. It starts with a basic greeting and grows step by step into a name-based app with persistence and formatted output.
 
 ## Summary
 
-The application starts with "Hello World", then supports command-line names, stdin names, list and remove operations, persistence across runs, and banner output.
+The app supports:
+- default greeting
+- one or many names from command-line
+- names from standard input
+- saved name list display
+- removal of saved names
+- persistence in a local data file
+- banner style output
 
 ## Use Case Roadmap
 
 1. UC1: Print a basic greeting in the console.
 2. UC2: Accept one name from command-line input.
-3. UC3: Support optional argument flags.
+3. UC3: Add optional argument flags.
 4. UC4: Handle multiple command-line names.
 5. UC5: Read one name from standard input.
 6. UC6: Read multiple names from standard input.
 7. UC7: Store names and list them on request.
 8. UC8: Remove stored names.
 9. UC9: Refactor logic into reusable methods.
-10. UC10: Move name management into `NameManager`.
-11. UC11: Persist names between runs in `data/names.txt`.
+10. UC10: Move name management into a dedicated class.
+11. UC11: Persist names between runs.
 12. UC12: Render greeting output in banner mode.
 
 ## Build and Run

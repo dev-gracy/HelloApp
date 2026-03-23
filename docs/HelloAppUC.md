@@ -2,11 +2,11 @@
 
 ## UC1: Display "Hello World"
 
-Description: Running with no arguments prints `Hello World`.
+Description: Run without inputs and print `Hello World`.
 
 ## UC2: Display Greeting for One Command-Line Name
 
-Description: Running with one positional argument prints `Hello <name>`.
+Description: One argument prints a personalized greeting.
 
 Example:
 ```bash
@@ -15,12 +15,10 @@ mvn exec:java -Dexec.args="Ava"
 
 ## UC3: Optional Argument Handling
 
-Description: Flags are optional and can be combined.
+Description: Optional flags are supported for input/output control.
 
 Supported flags:
-- `--default`
 - `--stdin`
-- `--add`
 - `--list`
 - `--remove`
 - `--banner`
@@ -36,11 +34,11 @@ mvn exec:java -Dexec.args="Ava Ben Mia"
 
 ## UC5: Read a Single Name from Standard Input
 
-Description: With `--stdin`, one input line is treated as one name.
+Description: With `--stdin`, one line can be read as one name.
 
 ## UC6: Read Multiple Names from Standard Input
 
-Description: With `--stdin`, multiple input lines or comma-separated names are supported.
+Description: With `--stdin`, multiple lines or comma-separated names are accepted.
 
 Example:
 ```bash
@@ -49,7 +47,7 @@ echo Ava, Ben, Mia | mvn exec:java -Dexec.args="--stdin"
 
 ## UC7: Store Names and List Them
 
-Description: Entered names are stored and can be viewed with `--list`.
+Description: Names are kept in memory and can be listed.
 
 Example:
 ```bash
@@ -67,11 +65,11 @@ mvn exec:java -Dexec.args="--remove Ava"
 
 ## UC9: Refactor Logic into Methods
 
-Description: Input parsing, stdin processing, and execution are separated into dedicated methods.
+Description: Parsing, reading, and output responsibilities are split into methods.
 
 ## UC10: Move Name Management to a Separate Class
 
-Description: Name list operations are handled by `NameManager`.
+Description: Name operations are moved to `NameManager`.
 
 Responsibilities moved:
 - Add name(s)
@@ -82,11 +80,11 @@ Responsibilities moved:
 
 ## UC11: Persistence Across Runs
 
-Description: Names are stored in `data/names.txt` and reloaded on startup.
+Description: Names are saved to a local file and restored at startup.
 
 ## UC12: Banner-Style Display
 
-Description: `--banner` prints decorated greeting output.
+Description: `--banner` prints a decorated greeting box.
 
 Example:
 ```bash

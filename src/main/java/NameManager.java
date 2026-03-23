@@ -2,24 +2,23 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 class NameManager {
     private final Path storagePath;
-    private final List<String> names;
+    private final Set<String> names;
 
     NameManager(Path storagePath) {
         this.storagePath = storagePath;
-        this.names = new ArrayList<>();
+        this.names = new LinkedHashSet<>();
         load();
     }
 
     void addName(String name) {
         String normalized = normalize(name);
-        if (normalized.isEmpty()) {
-            return;
-        }
-        if (!containsIgnoreCase(normalized)) {
+        if (!normalized.isEmpty()) {
             names.add(normalized);
         }
     }
@@ -32,13 +31,7 @@ class NameManager {
 
     boolean removeName(String name) {
         String normalized = normalize(name);
-        for (int i = 0; i < names.size(); i++) {
-            if (names.get(i).equalsIgnoreCase(normalized)) {
-                names.remove(i);
-                return true;
-            }
-        }
-        return false;
+        return names.remove(normalized);
     }
 
     List<String> getNames() {
@@ -55,11 +48,12 @@ class NameManager {
         }
 
         StringBuilder builder = new StringBuilder("Stored names:");
-        for (int i = 0; i < names.size(); i++) {
+        List<String> orderedNames = getNames();
+        for (int i = 0; i < orderedNames.size(); i++) {
             builder.append(System.lineSeparator())
                 .append(i + 1)
                 .append(". ")
-                .append(names.get(i));
+                .append(orderedNames.get(i));
         }
         return builder.toString();
     }
@@ -84,7 +78,7 @@ class NameManager {
             if (parent != null) {
                 Files.createDirectories(parent);
             }
-            Files.write(storagePath, names);
+            Files.write(storagePath, getNames());
         } catch (IOException ex) {
             throw new IllegalStateException("Unable to save names", ex);
         }
@@ -103,15 +97,6 @@ class NameManager {
         } catch (IOException ex) {
             throw new IllegalStateException("Unable to load names", ex);
         }
-    }
-
-    private boolean containsIgnoreCase(String name) {
-        for (String existing : names) {
-            if (existing.equalsIgnoreCase(name)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private String normalize(String value) {
