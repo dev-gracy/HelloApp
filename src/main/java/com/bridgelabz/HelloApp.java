@@ -1,7 +1,12 @@
-package com.bridgelabz;
+package com.bridgelabz; 
 
 public class HelloApp {
     public static void main(String[] args) {
-        System.out.println("Hello World");
+        // get the name from commnd-line argument
+
+            String name = args[0];
+            System.out.println("Hello, " + name + "!");
+
+        
     }
 }
