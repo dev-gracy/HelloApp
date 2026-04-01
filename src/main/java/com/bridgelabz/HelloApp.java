@@ -7,14 +7,12 @@ public class HelloApp {
             System.out.println("Hello, World!");
         } else {
             StringBuilder names = new StringBuilder();
-            boolean first = true;
 
-            for (String name : args) {
-                if (!first) {
+            for (int i = 0; i < args.length; i++) {
+                names.append(args[i]);
+                if (i < args.length - 1) {
                     names.append(", ");
                 }
-                names.append(name);
-                first = false;
             }
 
             System.out.println("Hello, " + names + "!");
